@@ -1,0 +1,5 @@
+{
+  "name": "Modelia AI Studio",
+  "description": "A simplified AI studio application that allows users to upload an image, provide a prompt and style, and generate a new image. It includes features like client-side image downscaling, mock API interaction with retry logic, and a history of recent generations.",
+  "requestFramePermissions": []
+}
