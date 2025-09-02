@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Style } from '../types';
 import { STYLE_OPTIONS } from '../constants';
@@ -15,7 +14,7 @@ interface PromptFormProps {
   isReady: boolean;
 }
 
-export const PromptForm: React.FC<PromptFormProps> = ({
+export const PromptForm: React.FC<PromptFormProps> = React.memo(({
   prompt,
   setPrompt,
   style,
@@ -86,4 +85,5 @@ export const PromptForm: React.FC<PromptFormProps> = ({
       </div>
     </form>
   );
-};
+});
+PromptForm.displayName = 'PromptForm';

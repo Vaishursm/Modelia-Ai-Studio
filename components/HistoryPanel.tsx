@@ -7,9 +7,12 @@ interface HistoryPanelProps {
   onSelect: (item: Generation) => void;
 }
 
-const HistoryItem: React.FC<{ item: Generation, onSelect: () => void }> = ({ item, onSelect }) => {
-    // FIX: The 'relativeTimeStyle' option is not valid for `Intl.DateTimeFormat`.
-    // Replaced with `Intl.RelativeTimeFormat` to correctly calculate and display the time ago.
+interface HistoryItemProps {
+  item: Generation;
+  onSelect: (item: Generation) => void;
+}
+
+const HistoryItem: React.FC<HistoryItemProps> = React.memo(({ item, onSelect }) => {
     const timeAgo = (() => {
         const rtf = new Intl.RelativeTimeFormat('en-US', { numeric: 'auto', style: 'long' });
         const diffSeconds = Math.round((new Date(item.createdAt).getTime() - Date.now()) / 1000);
@@ -31,11 +34,13 @@ const HistoryItem: React.FC<{ item: Generation, onSelect: () => void }> = ({ ite
         const diffDays = Math.round(diffHours / 24);
         return rtf.format(diffDays, 'day');
     })();
+    
+    const handleSelect = () => onSelect(item);
 
     return (
         <li
-            onClick={onSelect}
-            onKeyDown={(e) => e.key === 'Enter' && onSelect()}
+            onClick={handleSelect}
+            onKeyDown={(e) => e.key === 'Enter' && handleSelect()}
             tabIndex={0}
             role="button"
             aria-label={`Select generation from ${timeAgo}`}
@@ -48,7 +53,9 @@ const HistoryItem: React.FC<{ item: Generation, onSelect: () => void }> = ({ ite
             </div>
         </li>
     );
-}
+});
+HistoryItem.displayName = 'HistoryItem';
+
 
 export const HistoryPanel: React.FC<HistoryPanelProps> = ({ history, onSelect }) => {
   return (
@@ -60,7 +67,7 @@ export const HistoryPanel: React.FC<HistoryPanelProps> = ({ history, onSelect })
       {history.length > 0 ? (
         <ul className="space-y-3 max-h-[calc(100vh-200px)] overflow-y-auto">
           {history.map((item) => (
-            <HistoryItem key={item.id} item={item} onSelect={() => onSelect(item)} />
+            <HistoryItem key={item.id} item={item} onSelect={onSelect} />
           ))}
         </ul>
       ) : (

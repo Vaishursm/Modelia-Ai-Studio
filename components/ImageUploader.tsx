@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useRef } from 'react';
 import { downscaleImage } from '../services/imageService';
 import { MAX_FILE_SIZE_MB } from '../constants';
@@ -8,7 +7,7 @@ interface ImageUploaderProps {
   onImageSelect: (image: { file: File, dataUrl: string } | null) => void;
 }
 
-export const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect }) => {
+export const ImageUploader: React.FC<ImageUploaderProps> = React.memo(({ onImageSelect }) => {
   const [preview, setPreview] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -83,4 +82,5 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect }) =
       {error && <p className="text-red-500 mt-2 text-sm">{error}</p>}
     </div>
   );
-};
+});
+ImageUploader.displayName = 'ImageUploader';

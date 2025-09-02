@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Style } from '../types';
 import { TagIcon, TextIcon } from './Icons';
@@ -9,7 +8,7 @@ interface SummaryPreviewProps {
   style: Style;
 }
 
-export const SummaryPreview: React.FC<SummaryPreviewProps> = ({ imageDataUrl, prompt, style }) => {
+export const SummaryPreview: React.FC<SummaryPreviewProps> = React.memo(({ imageDataUrl, prompt, style }) => {
   return (
     <div className="space-y-4">
       <div className="flex flex-col md:flex-row gap-6 items-start">
@@ -37,4 +36,5 @@ export const SummaryPreview: React.FC<SummaryPreviewProps> = ({ imageDataUrl, pr
       </div>
     </div>
   );
-};
+});
+SummaryPreview.displayName = 'SummaryPreview';
